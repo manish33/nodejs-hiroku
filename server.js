@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const hbs = require('hbs');
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static(__dirname+'/Public'));
 app.set('viewengine','hbs');
@@ -13,7 +14,7 @@ app.get('/',(req, res)=>{
   });
 });
 
-app.listen(3000);
+app.listen(PORT);
 
 app.get('/about',(req,res)=>{
   res.render('about.hbs',{
