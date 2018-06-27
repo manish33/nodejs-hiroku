@@ -1,28 +1,34 @@
-const express = require('express');
-const app = express();
+const express= require('express');
 const hbs = require('hbs');
+
+var app = express();
+
+hbs.registerPartials(__dirname+ '/views/partials')
+
+app.set('view engine', 'hbs');
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname+'/Public'));
-app.set('viewengine','hbs');
-app.registerPartial(__dirname+'/Views/partial');
+app.use(express.static(__dirname + '/public'));
+hbs.registerHelper('getfullyear',()=>{
+  return new Date().getFullYear()
+});
 
-app.get('/',(req, res)=>{
-  res.render('home.hbs' {
-    name: 'home',
-    currentyear: new Date().getFullYear()
-  });
+hbs.registerHelper('screamit', (text) => {
+  return text.toUpperCase();
+});
+
+app.get('/about',(req,res)=>{
+
+res.render('about.hbs',{
+  pagetitle: 'welcome to the about page',
+});
+
+});
+
+app.get('/',(req,res)=>{
+
+res.send('wow!')
+
 });
 
 app.listen(PORT);
-
-app.get('/about',(req,res)=>{
-  res.render('about.hbs',{
-    name: "manish",
-    currentyear: new Date().getFullYear()
-  });
-})
-
-app.get('/bad',(req,res)=>{
-  res.send("invalid request");
-})
